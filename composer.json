@@ -8,7 +8,7 @@
     ]
   },
   "require": {
-    "phpunit/phpunit": "^9.0"
+    "phpunit/phpunit": "^10.0"
   },
   "authors": [
     {
@@ -17,6 +17,17 @@
     }
   ],
   "require-dev": {
-    "mediawiki/mediawiki-codesniffer": "^30.0"
+    "mediawiki/mediawiki-codesniffer": "^41.0",
+    "php-mock/php-mock-phpunit": "^2.7"
+  },
+  "scripts": {
+    "phpunit": "phpunit",
+    "test": [
+      "@phpcs"
+    ],
+    "fix": [
+      "phpcbf"
+    ],
+    "phpcs": "phpcs -sp --cache"
   }
 }
