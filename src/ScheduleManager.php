@@ -9,7 +9,7 @@
  * This is purpose-built crap.
  */
 class ScheduleManager {
-	private static $homeHttpClient;
+	private static CurlHomeHttpClient $homeHttpClient;
 
 	/**
 	 * This method is the entry point into the code. You can assume that it is
@@ -30,12 +30,11 @@ class ScheduleManager {
 		return floatval( self::stringFromURL( "http://timer.home:9990/end", 5 ) );
 	}
 
-	private static function stringFromURL( string $urlString, int $s )
-	{
-		if (!isset(self::$homeHttpClient)) {
+	private static function stringFromURL( string $urlString, int $s ) {
+		if ( !isset( self::$homeHttpClient ) ) {
 			self::$homeHttpClient = '\CurlHomeHttpClient';
 		}
-		return self::$homeHttpClient::stringFromURL($urlString, $s);
+		return self::$homeHttpClient::stringFromURL( $urlString, $s );
 	}
 
 	private static function startHour(): float {
@@ -45,8 +44,7 @@ class ScheduleManager {
 	/**
 	 * @param mixed $homeHttpClient
 	 */
-	public static function setHomeHttpClient($homeHttpClient): void
-	{
+	public static function setHomeHttpClient( $homeHttpClient ): void {
 		self::$homeHttpClient = $homeHttpClient;
 	}
 }
