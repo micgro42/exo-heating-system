@@ -1,5 +1,9 @@
 <?php
 
+declare( strict_types=1 );
+
+namespace exo\heating;
+
 /**
  * The system obtains temperature data from a remote source,
  * compares it with a given threshold and controls a remote heating

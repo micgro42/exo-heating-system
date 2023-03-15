@@ -1,5 +1,9 @@
 <?php
 
+declare( strict_types=1 );
+
+namespace exo\heating;
+
 class CurlHomeHttpClient {
 
 	public static function stringFromURL( string $urlString, int $s ) {
