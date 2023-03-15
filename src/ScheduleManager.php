@@ -28,17 +28,9 @@ class ScheduleManager {
 		return floatval( self::stringFromURL( "http://timer.home:9990/end", 5 ) );
 	}
 
-	private static function stringFromURL( string $urlString, int $s ) {
-		$c = curl_init();
-
-		curl_setopt( $c, CURLOPT_URL, $urlString );
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, true );
-
-		$o = curl_exec( $c );
-
-		curl_close( $c );
-
-		return substr( $o, 0, $s );
+	private static function stringFromURL( string $urlString, int $s )
+	{
+		return CurlHomeHttpClient::stringFromURL($urlString, $s);
 	}
 
 	private static function startHour(): float {
