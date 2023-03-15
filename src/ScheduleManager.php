@@ -9,6 +9,8 @@
  * This is purpose-built crap.
  */
 class ScheduleManager {
+	private static $homeHttpClient;
+
 	/**
 	 * This method is the entry point into the code. You can assume that it is
 	 * called at regular interval with the appropriate parameters.
@@ -30,10 +32,21 @@ class ScheduleManager {
 
 	private static function stringFromURL( string $urlString, int $s )
 	{
-		return CurlHomeHttpClient::stringFromURL($urlString, $s);
+		if (!isset(self::$homeHttpClient)) {
+			self::$homeHttpClient = '\CurlHomeHttpClient';
+		}
+		return self::$homeHttpClient::stringFromURL($urlString, $s);
 	}
 
 	private static function startHour(): float {
 		return floatval( self::stringFromURL( "http://timer.home:9990/start", 5 ) );
+	}
+
+	/**
+	 * @param mixed $homeHttpClient
+	 */
+	public static function setHomeHttpClient($homeHttpClient): void
+	{
+		self::$homeHttpClient = $homeHttpClient;
 	}
 }
