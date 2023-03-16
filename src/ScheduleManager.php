@@ -1,5 +1,9 @@
 <?php
 
+declare( strict_types=1 );
+
+namespace exo\heating;
+
 /**
  * The system obtains temperature data from a remote source,
  * compares it with a given threshold and controls a remote heating
@@ -9,6 +13,8 @@
  * This is purpose-built crap.
  */
 class ScheduleManager {
+	private static CurlHomeHttpClient $curlHomeHttpClient;
+
 	/**
 	 * This method is the entry point into the code. You can assume that it is
 	 * called at regular interval with the appropriate parameters.
@@ -29,19 +35,20 @@ class ScheduleManager {
 	}
 
 	private static function stringFromURL( string $urlString, int $s ) {
-		$c = curl_init();
-
-		curl_setopt( $c, CURLOPT_URL, $urlString );
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, true );
-
-		$o = curl_exec( $c );
-
-		curl_close( $c );
-
-		return substr( $o, 0, $s );
+		if ( !isset( static::$curlHomeHttpClient ) ) {
+			static::$curlHomeHttpClient = new CurlHomeHttpClient();
+		}
+		return static::$curlHomeHttpClient->stringFromURL( $urlString, $s );
 	}
 
 	private static function startHour(): float {
 		return floatval( self::stringFromURL( "http://timer.home:9990/start", 5 ) );
+	}
+
+	/**
+	 * @param mixed $curlHomeHttpClient
+	 */
+	public static function setCurlHomeHttpClient( $curlHomeHttpClient ): void {
+		self::$curlHomeHttpClient = $curlHomeHttpClient;
 	}
 }
