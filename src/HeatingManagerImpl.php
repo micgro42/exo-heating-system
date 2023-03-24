@@ -11,12 +11,10 @@ class HeatingManagerImpl {
 		$this->heatingController = new SocketHeatingController();
 	}
 
-	public function manageHeating( string $t, string $threshold, bool $active ): void {
-		$dt = floatval( $t );
-		$dThreshold = floatval( $threshold );
-		if ( $dt < $dThreshold && $active ) {
+	public function manageHeating( float $t, float $threshold ): void {
+		if ( $t < $threshold ) {
 			$this->sendMessage( "on" );
-		} elseif ( $dt > $dThreshold && $active ) {
+		} elseif ( $t > $threshold ) {
 			$this->sendMessage( "off" );
 		}
 	}
