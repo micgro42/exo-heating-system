@@ -24,6 +24,7 @@
   },
   "scripts": {
     "phpunit": "phpunit",
+    "phpunit-coverage": "phpunit --coverage-text --coverage-filter=src --coverage-html=coverage",
     "test": [
       "phpcs -sp --cache ."
     ],
